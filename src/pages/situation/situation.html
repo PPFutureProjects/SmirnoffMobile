@@ -1,0 +1,90 @@
+
+<ion-header>
+  <ion-navbar>    
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span color="primary" showWhen="ios">Annuler</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons> 
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <form #form="ngForm"   novalidate>
+<ion-list > 
+   <ion-list-header>
+     PRESENCE / RUPTURE
+</ion-list-header>     
+    <ion-item>
+      <ion-label>Pas vendu dans le POS</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="situation.absent" name="absent"[checked]="!situation.enrupture" ></ion-checkbox>
+    </ion-item>
+    <ion-item >
+      <ion-label>Vendu mais est en rupture</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="situation.enrupture" name="enrupture" [disabled]="situation.absent"  ></ion-checkbox>
+    </ion-item> 
+  <ion-list-header [hidden]="situation.absent || situation.enrupture">
+     ELEMENTS DE VENTE
+</ion-list-header> 
+    <ion-item (click)="bnreBlle()" [hidden]="situation.absent || situation.enrupture">
+      Nombre de bouteilles
+     <ion-note item-right>{{ situation.bnreBlle}} Btlles</ion-note>
+  </ion-item>
+  <ion-item (click)="price()" [hidden]="situation.absent || situation.enrupture">
+      Prix de la bouteille
+     <ion-note item-right>{{ situation.price}} cfa</ion-note>
+  </ion-item>
+  <ion-list-header>
+     ELEMENTS DE VISIBILITE
+</ion-list-header>     
+    <ion-item>
+      <ion-label>Présence de frigo</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="situation.frigo" name="frigo" ></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Présence de potence</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="situation.potence" name="potence" ></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Présence d'affiches</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="situation.affiche" name="affiche" ></ion-checkbox>
+    </ion-item> 
+    <ion-item>
+      <ion-label>Affichettes de prix</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="situation.affichette" name="affichette" ></ion-checkbox>
+    </ion-item> 
+     <ion-item>
+      <ion-label>Autres supports</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="situation.autre" name="autre" ></ion-checkbox>
+    </ion-item>
+   <ion-list-header>
+     ELEMENTS DE PROMOTION
+</ion-list-header>            
+    <ion-item>
+      <ion-label>National crown promotion</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="situation.ncp" name="ncp"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Tactical crown promotion</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="situation.tcp" name="tcp"></ion-checkbox>
+    </ion-item>     
+     <ion-item>
+      <ion-label>In Bar promotion</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="situation.inbar" name="inbar"></ion-checkbox>
+    </ion-item>
+    <ion-item (click)="nbreRh()" [hidden]="!situation.inbar">
+      Nombre de RH in Bar
+     <ion-note item-right>{{ situation.nbreRh}}</ion-note>
+  </ion-item>  
+ <div padding>
+          <button ion-button block color="primary"  (click)="dismiss(situation)"  [disabled]="!isValid()" icon-right>
+           <span > TERMINER</span>
+           <ion-icon name="done"></ion-icon>
+          </button>
+</div>               
+  </ion-list>
+          
+  </form>    
+</ion-content>

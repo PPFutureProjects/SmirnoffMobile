@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Les gagnants</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span color="primary" showWhen="ios">Annuler</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>     
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+<ion-list>
+<ion-list-header>
+     Saisir un gagnant
+</ion-list-header> 
+  <ion-item>
+    <ion-label >Nom </ion-label>
+    <ion-input type="text" [(ngModel)]="gagnant.nom" name="nom"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label >Télephone</ion-label>
+    <ion-input type="tel" [(ngModel)]="gagnant.tel" name="tel"></ion-input>
+  </ion-item>
+  <ion-item >
+    <ion-label >Objet  </ion-label>
+   <ion-select   [(ngModel)]="gagnant.object" name="object"  required>
+         <ion-option  value="Boutielle">Boutielle </ion-option> 
+         <ion-option  value="Objet 1" >Objet 1</ion-option>
+         <ion-option  value="Objet 2" >Objet 2</ion-option>
+   </ion-select>
+  </ion-item>
+ <div padding>
+           <button ion-button block  (click)="add()"  [disabled]="isInvalid()">
+           <span >Ajouter un gagnant</span>
+            <ion-icon name="done-all" ></ion-icon>
+       </button>           
+</div> 
+<ion-list-header>
+     Liste des gagnants
+</ion-list-header>
+  <ion-item-sliding *ngFor="let winer of winers">
+    <ion-item>
+      <h2>{{winer.nom}}</h2>
+      <p>{{winer.tel}}</p>
+      <ion-note item-right>{{winer.object}}</ion-note>
+    </ion-item>
+    <ion-item-options side="right">
+      <button ion-button color="danger" (click)="remove()" >
+        <ion-icon name="trash"></ion-icon>
+        Supprimer
+      </button>
+    </ion-item-options>
+  </ion-item-sliding> 
+</ion-list>
+</ion-content>

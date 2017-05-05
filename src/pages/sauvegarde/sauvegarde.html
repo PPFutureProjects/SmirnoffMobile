@@ -1,0 +1,38 @@
+<!--
+  Generated template for the Sauvegarde page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+      <button menuToggle ion-button icon-only>
+      <ion-icon name="menu"></ion-icon>
+    </button>   
+    <ion-title>Sauvegarde</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<ion-list  class="empty" *ngIf="!isSaved()">
+<ion-item text-wrap no-lines>
+   <p><ion-icon color="light" name="cloud-upload"></ion-icon></p>
+    <ion-note item-center>Connectez votre telephone à internet afin de sauvegarder vos données.</ion-note>
+ </ion-item>
+<div padding>
+<button ion-button block  (click)="startUpload()" icon-right> 
+<span > Commencer la sauvegarde </span>
+  <ion-icon name="cloud-upload"></ion-icon>
+ </button>
+</div> 
+ </ion-list>
+<ion-list  class="empty" *ngIf="isSaved()">
+<ion-item text-wrap no-lines>
+   <p> <ion-icon color="secondary" name="cloud-done"></ion-icon></p>
+    <ion-note item-center>Des données sont maintenant sauvegardées.</ion-note>
+ </ion-item>
+ </ion-list> 
+</ion-content>

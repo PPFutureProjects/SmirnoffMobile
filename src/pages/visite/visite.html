@@ -1,0 +1,217 @@
+
+<ion-header>
+  <ion-navbar>    
+    <ion-title>{{pointVente.nom}}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span color="primary" showWhen="ios">Annuler</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons> 
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <form #form="ngForm"   novalidate>
+    <section *ngIf="stape=='status'">
+<ion-list >
+<ion-list-header>
+      STATUT DU POINT DE VENTE
+</ion-list-header> 
+    <ion-item>
+      <ion-label>N'est pas un client</ion-label>
+      <ion-toggle color="dark" [(ngModel)]="visite.pasClient" name="pasClient" ></ion-toggle>
+    </ion-item>
+    <ion-item>
+    <ion-label floating>N'est pas client pour</ion-label>
+    <ion-select [(ngModel)]="visite.raisonPasClient" name="raisonPasClient" [disabled]="!visite.pasClient">
+      <ion-option value="En attente de création"  checked="true">En attente de création</ion-option>
+      <ion-option value="Raison réligieuse">Raison réligieuse</ion-option>
+      <ion-option value="Pas de capital">Pas de capital</ion-option>
+      <ion-option value="Autres raisons">Autres raisons</ion-option>
+    </ion-select>
+  </ion-item>    
+    <ion-item>
+      <ion-label>N'est pas ouvert</ion-label>
+      <ion-toggle color="dark" [(ngModel)]="visite.pasOuvert" name="pasOuvert" [disabled]="visite.pasClient"></ion-toggle>
+    </ion-item>
+    <ion-item>
+    <ion-label floating>N'est pas ouvert pour</ion-label>
+    <ion-select [(ngModel)]="visite.raisonPasOuvert" name="raisonPasOuvert" [disabled]="!visite.pasOuvert || visite.pasClient">
+      <ion-option value="Retard d'ouverture"  checked="true">Retard d'ouverture</ion-option>
+      <ion-option value="Etablissement scellé">P.D.V scellé</ion-option>
+      <ion-option value="Fermeture momentannée">Fermeture momentannée</ion-option>
+      <ion-option value="Point de vente supprimé">P.D.V supprimé</ion-option>
+      <ion-option value="Pas de capital">Pas de capital</ion-option>
+      <ion-option value="Autres raisons">Autres raisons</ion-option>
+    </ion-select>
+  </ion-item>    
+    </ion-list>
+ <div padding>
+      <ion-row >
+        <ion-col width-50>
+      <button ion-button block color="danger"  (click)="goBack()" icon-left>
+        <ion-icon name="close"></ion-icon>
+        <span> Annuler</span>
+      </button>
+      </ion-col>
+        <ion-col width-50>
+          <button ion-button block  (click)="nextStape()"  [disabled]="isInvalid()">
+           <span *ngIf="!visite.pasClient && !visite.pasOuvert"> Visite</span>
+           <span *ngIf="visite.pasClient || visite.pasOuvert">Terminer</span>
+           <ion-icon name="arrow-forward" *ngIf="!visite.pasClient && !visite.pasOuvert"></ion-icon>
+           <ion-icon name="done-all" *ngIf="visite.pasClient || visite.pasOuvert"></ion-icon>
+          </button>
+        </ion-col>  
+      </ion-row>
+   </div>        
+ </section>
+
+<section *ngIf="stape=='visibility'">
+<ion-list >
+<ion-list-header>
+      CONTRÔLE DE LA VISIBILITE
+</ion-list-header> 
+   <ion-item>
+      <ion-label>Mise en anvant des produits</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="visite.map" name="map" ></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Exclusivité sur les produits</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="visite.exc" name="exc" ></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Dispose des affiches</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="visite.aff" name="aff" ></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Dispose des présentoires</ion-label>
+      <ion-checkbox color="secondary" [(ngModel)]="visite.pre" name="pre" ></ion-checkbox>
+    </ion-item>
+      </ion-list>
+ <div padding>
+      <ion-row >
+        <ion-col width-50>
+      <button ion-button block color="light"  (click)="goBack()" icon-left>
+        <ion-icon name="arrow-back"></ion-icon>
+        <span > Statut</span>
+      </button>
+      </ion-col>
+        <ion-col width-50>
+          <button ion-button block  (click)="nextStape()"  >
+           <span > Suivant</span>
+            <ion-icon name="arrow-forward" ></ion-icon>
+          </button>
+        </ion-col>  
+      </ion-row>
+</div>        
+ </section>
+
+  <section *ngIf="stape=='sell'">
+<ion-list >  
+<ion-list-header>
+     CONTRÔLE DES VENTES
+</ion-list-header>
+    <ion-item>
+      <ion-label>Respecte les prix au détail</ion-label>
+      <ion-checkbox color="danger" [(ngModel)]="visite.rpd" name="rpd"></ion-checkbox>
+  </ion-item>
+    <ion-item>
+      <ion-label>Respecte les prix de gros</ion-label>
+      <ion-checkbox color="danger" [(ngModel)]="visite.rpp" name="rpp"></ion-checkbox>
+  </ion-item>
+  <ion-item >
+    <ion-label color="primary">S'approvionne chez </ion-label>
+   <ion-select   [(ngModel)]="visite.sapp" name="sapp" #sapp="ngModel" required>
+         <ion-option  value="true">Un A.C</ion-option> 
+         <ion-option  value="" >Autre</ion-option>
+   </ion-select>
+  </ion-item> 
+    <ion-item (click)="mvj()">
+      Moyenne vente/jour
+     <ion-note item-right>{{ visite.mvj}}</ion-note>
+  </ion-item>
+    <ion-item (click)="ecl()">
+      Ecart de livraison 
+     <ion-note item-right>{{ visite.ecl}}</ion-note>
+  </ion-item>
+  <ion-item (click)="fp()">
+      Fréquence de passage 
+     <ion-note item-right>{{ visite.fp}}</ion-note>
+  </ion-item> 
+       </ion-list>
+ <div padding>
+      <ion-row >
+        <ion-col width-50>
+      <button ion-button block color="light"  (click)="goBack()" icon-left>
+        <ion-icon name="arrow-back"></ion-icon>
+        <span > Visibilité</span>
+      </button>
+      </ion-col>
+        <ion-col width-50>
+          <button ion-button block  (click)="nextStape()" [disabled]="isInvalid()"  icon-right>
+           <span > Suivant</span>
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-col>  
+      </ion-row>
+</div>        
+ </section> 
+  <section *ngIf="stape=='stocks'">
+<ion-list >  
+<ion-list-header>
+     CONTRÔLE DES STOCKS
+</ion-list-header>       
+  <button ion-item *ngFor="let situation of visite.situations"  (click)="stock(situation)">
+        {{ situation.produit }}
+      <ion-note item-right>{{ situation.stock}}</ion-note>
+  </button> 
+</ion-list>
+ <div padding>
+      <ion-row >
+        <ion-col width-50>
+      <button ion-button block color="light"  (click)="goBack()" icon-left>
+        <ion-icon name="arrow-back"></ion-icon>
+        <span > Ventes</span>
+      </button>
+      </ion-col>
+        <ion-col width-50>
+          <button ion-button block  (click)="nextStape()" icon-right>
+            
+           <span > Suivant</span>
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-col>  
+      </ion-row>
+</div>        
+ </section>   
+  <section *ngIf="stape=='comment'">
+<ion-list >  
+<ion-list-header>
+     COMMENTAIRES
+</ion-list-header>       
+   <ion-item >
+      <ion-textarea rows="2" [(ngModel)]="visite.commentaire" placeholder="Faites un commentaire" name="commentaire" #commentaire="ngModel"></ion-textarea>
+  </ion-item>
+</ion-list>
+ <div padding>
+      <ion-row >
+        <ion-col width-50>
+      <button ion-button block color="light"  (click)="goBack()" icon-left>
+        <ion-icon name="arrow-back"></ion-icon>
+        <span >Stocks</span>
+      </button>
+      </ion-col>
+        <ion-col width-50>
+          <button ion-button block color="secondary" (click)="nextStape()"   [disabled]="isInvalid()" icon-right>
+           <span > TERMINER</span>
+           <ion-icon name="done-all"></ion-icon>
+          </button>
+        </ion-col>  
+      </ion-row>
+</div>        
+ </section>  
+   </form>
+
+</ion-content>

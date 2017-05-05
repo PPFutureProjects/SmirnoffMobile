@@ -1,0 +1,12 @@
+{
+  "name": "mobileManager",
+  "app_id": "e17e0ee0",
+  "v2": true,
+  "typescript": true,
+  "proxies": [
+    {
+      "path": "/v1",
+      "proxyUrl": "http://radiant-eyrie-82217.herokuapp.com/v1"
+    }
+  ]
+}

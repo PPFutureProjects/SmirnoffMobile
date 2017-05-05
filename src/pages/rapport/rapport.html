@@ -1,0 +1,142 @@
+
+<ion-header>
+  <ion-navbar>    
+    <ion-title>{{pointVente.nom}}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span color="primary" showWhen="ios">Annuler</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons> 
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <form #form="ngForm"   novalidate>
+<section *ngIf="stape=='sales'">
+<ion-list >
+  <ion-item >
+     <ion-label color="primary" floating>Rapport du</ion-label>
+  <ion-datetime 
+     displayFormat="DD/MM/YYYY"
+     pickerFormat="D MMM  YYYY"  
+     doneText="Terminé" cancelText="Annuler"
+      name="date"
+     [(ngModel)]="rapport.date"
+      #date="ngModel"></ion-datetime>
+     
+</ion-item> 
+ 
+  <ion-list-header>
+     ACTIVITES DANS LE POS
+</ion-list-header> 
+    <ion-item (click)="rh()">
+       <ion-icon name="person" color="primary" item-left></ion-icon>
+    Nom du BA 1
+     <ion-note item-right *ngIf="rapport.rhNom">{{rapport.rhNom}}</ion-note>
+     <ion-note item-right *ngIf="!rapport.rhNom">choisir</ion-note>    
+  </ion-item>
+    <ion-item (click)="rh1()">
+       <ion-icon name="person" color="primary" item-left></ion-icon>
+    Nom du BA 2
+     <ion-note item-right *ngIf="rapport.rh1Nom">{{rapport.rh1Nom}}</ion-note>
+     <ion-note item-right *ngIf="!rapport.rh1Nom">choisir</ion-note>    
+  </ion-item>
+   <ion-item (click)="merchant()">
+       <ion-icon name="grid" color="primary" item-left></ion-icon>
+    Merchandising
+     <p *ngIf="rapport.disposition"> {{rapport.disposition}}, {{rapport.etagerColonne}} colones, {{rapport.etagerLigne}} lignes</p> 
+     <p *ngIf="!rapport.disposition"> Absent sur l'étagère</p>   
+  </ion-item> 
+<!--  <ion-item (click)="winers()">
+       <ion-icon name="people" item-left></ion-icon>
+    Les gagnants
+     <ion-note item-right *ngIf="rapport.gagnants.length>0">{{rapport.gagnants.length}}</ion-note>
+     <ion-note item-right *ngIf="rapport.gagnants.length==0">Aucun</ion-note>
+  </ion-item> -->   
+<ion-list-header>
+      ELEMENTS DE VENTE
+</ion-list-header> 
+    <ion-item (click)="setter('posRealTarget','Réalisées par la BA')">
+     <ion-icon name="pricetags" *ngIf="!rapport.posRealTarget" color="royal" item-left></ion-icon>   
+     <ion-icon name="pricetags" *ngIf="rapport.posRealTarget"  color="secondary" item-left></ion-icon> 
+      Réalisées par la BA
+     <ion-note item-right>{{ rapport.posRealTarget}} Btlles</ion-note>
+  </ion-item>
+    <ion-item (click)="setter('posRealDay','Réalisées par le POS')">
+          <ion-icon name="pricetags" *ngIf="!rapport.posRealDay" color="royal" item-left></ion-icon>   
+     <ion-icon name="pricetags" *ngIf="rapport.posRealDay"  color="secondary" item-left></ion-icon> 
+      Réalisées par le POS 
+     <ion-note item-right>{{ rapport.posRealDay}} Btlles</ion-note>
+  </ion-item> 
+  <ion-item (click)="freeIssue()" >
+  <ion-icon name="pricetags" *ngIf="!rapport.freeIssue" color="royal" item-left></ion-icon>   
+    <ion-icon name="pricetags" *ngIf="rapport.freeIssue"  color="secondary" item-left></ion-icon>    
+      Nombre de FI 
+     <ion-note item-right>{{ rapport.freeIssue}} Btlles</ion-note>
+  </ion-item>    
+  <ion-list-header>
+     CHECKING PAR MARQUE
+  </ion-list-header> 
+    <ion-item (click)="open(rapport.sminoffRed,'Sminoff Ice Red')">
+       <ion-icon name="beer"  [color]="color(rapport.sminoffRed)" item-left></ion-icon>
+      Smirnoff Ice Red 
+     <ion-note item-right>{{ rapport.sminoffRed.bnreBlle}} Btlles </ion-note>
+  </ion-item>
+    <ion-item (click)="open(rapport.sminoffBlack,'Sminoff Ice Black')">
+      <ion-icon name="beer" [color]="color(rapport.sminoffBlack)" item-left></ion-icon> 
+      Smirnoff Ice Black 
+     <ion-note item-right>{{ rapport.sminoffBlack.bnreBlle}} Btlles </ion-note>
+  </ion-item>
+    <ion-item (click)="open(rapport.sminoffBlue,'Sminoff Ice Blue')">
+      <ion-icon name="beer" [color]="color(rapport.sminoffBlue)" item-left></ion-icon> 
+      Smirnoff Ice Eelctric Gen.
+     <ion-note item-right>{{ rapport.sminoffBlue.bnreBlle}} Btlles </ion-note>
+  </ion-item>
+  <ion-item (click)="open(rapport.heineken,'Heineken')">
+     <ion-icon name="beer" [color]="color(rapport.heineken)" item-left></ion-icon>
+      Hieneken
+     <ion-note item-right>{{ rapport.heineken.bnreBlle}} Btlles</ion-note>
+  </ion-item>
+  <ion-item (click)="open(rapport.voodka,'Vk')">
+    <ion-icon name="beer" [color]="color(rapport.voodka)" item-left></ion-icon> 
+      VK
+     <ion-note item-right>{{ rapport.voodka.bnreBlle}} Btlles </ion-note>
+  </ion-item> 
+  <ion-item (click)="open(rapport.sabc1664,'1664')">
+     <ion-icon name="beer" [color]="color(rapport.sabc1664)" item-left></ion-icon>
+      1664
+     <ion-note item-right>{{rapport.sabc1664.bnreBlle}} Btlles </ion-note>
+  </ion-item>
+  <ion-item (click)="open(rapport.boostrer,'Booster Cola')">
+    <ion-icon name="beer" [color]="color(rapport.boostrer)" item-left></ion-icon> 
+      Booster Cola
+     <ion-note item-right>{{ rapport.boostrer.bnreBlle}} Btlles </ion-note>
+  </ion-item>
+  <ion-item (click)="open(rapport.sabc,'Booster Cider')">
+     <ion-icon name="beer" [color]="color(rapport.sabc)" item-left></ion-icon>
+      Booster Cider
+     <ion-note item-right>{{rapport.sabc.bnreBlle}} Btlles</ion-note>
+  </ion-item> 
+
+  <ion-item (click)="open(rapport.export,'33 Export')">
+    <ion-icon name="beer" [color]="color(rapport.export)" item-left></ion-icon> 
+      33 Export
+     <ion-note item-right>{{ rapport.export.bnreBlle}} Btlles </ion-note>
+  </ion-item>
+  <ion-item (click)="open(rapport.origine,'Origine')">
+     <ion-icon name="beer"  [color]="color(rapport.origine)" item-left></ion-icon>
+      Orijin
+     <ion-note item-right>{{rapport.origine.bnreBlle}} Btlles</ion-note>
+  </ion-item>               
+  </ion-list>
+ <div padding>
+           <button ion-button block  (click)="saveRapport()" [disabled]="isInvalid()" >
+           <span > Enrégistrer le rapport</span>
+            <ion-icon name="done-all" ></ion-icon>
+          </button>           
+
+</div>        
+ </section>       
+   </form>
+
+</ion-content>

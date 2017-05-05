@@ -1,0 +1,26 @@
+<ion-menu [content]="content">
+  <ion-header>
+  <ion-item class="item-menu" no-lines>
+    <ion-avatar item-right >
+      <img src="assets/img/noavatar.jpg">
+    </ion-avatar>
+    <h2>{{user_id}}</h2>
+    <ion-note>Superviseur</ion-note>
+  </ion-item>
+</ion-header>
+  <ion-content class="menu">
+    <ion-list inset>
+    <ion-item  *ngFor="let p of appPages" (click)="openPage(p)"class="item-menu" no-lines>
+        <ion-icon item-right [name]="p.icon"></ion-icon>
+        {{p.title}}
+    </ion-item >
+
+     </ion-list>
+<ion-footer  text-center>
+  <ion-toolbar >
+    <a><small>&copy; 2016 LPM Consulting.</small></a>
+  </ion-toolbar>
+</ion-footer>
+  </ion-content>
+</ion-menu>
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

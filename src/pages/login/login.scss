@@ -1,0 +1,44 @@
+page-login {
+ .logo {
+  padding: 30px 0;
+  min-height: 50px;
+  text-align: center;
+}
+.logo img {
+  max-width: 250px;
+}
+    .bgAuth {
+    background-color: rgb(6,92,121);
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    
+    }
+  }
+
+   .item {
+ 
+    background-color: transparent;
+    border: none !important; 
+    ion-input {
+        color: #e0e0e0;
+        text-align: center;
+      }  
+  }
+  button {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+  a {
+     text-align: center;
+    color: #e0e0e0;
+     small {
+      color: #e0e0e0;
+    }
+  }      
+}

@@ -1,0 +1,30 @@
+<!--
+  Generated template for the Login page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content padding class="bgAuth">
+   <div class="logo" >
+       <img src="assets/img/appicon.png">
+    </div> 
+    <form #form="ngForm"   novalidate>
+      <ion-list inset>
+  <div padding class="item">
+      <ion-item>
+        <ion-label floating color="primary"></ion-label>
+        <ion-input type="text" [(ngModel)]="credentials.login" name="login"  placeholder="Votre identifiant"  autocapitalize="off">
+        </ion-input>
+      </ion-item>
+  </div> 
+     <div padding>
+        <button ion-button  outline block color="primary" [disabled]="isInvalid()"   (click)="onSubmit()" >
+            <span  ><strong>Se connecter</strong></span>
+      </button>
+      </div>        
+     </ion-list>     
+    </form>
+</ion-content>
+  <ion-footer text-center>
+<p><a><small>&copy; 2016. LPM Consulting; Tous droits reservés</small></a></p>
+</ion-footer>

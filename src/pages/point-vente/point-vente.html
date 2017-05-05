@@ -1,0 +1,54 @@
+
+<ion-header>
+
+  <ion-navbar>    
+    <ion-title><span *ngIf="!pointVente.nom">Création d'un POS</span><span *ngIf="pointVente.nom">{{pointVente.nom}}</span></ion-title>
+     <ion-buttons start>
+ 
+      <button ion-button (click)="dismiss()">
+        <span color="primary" showWhen="ios">Annuler</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>   
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <form #form="ngForm"   novalidate>
+<ion-list >
+  <ion-item >
+ <ion-label color="primary" floating><span >Nom du POS</span> </ion-label>
+    <ion-input [(ngModel)]="pointVente.nom" name="nom" type="text" placeholder="" #nom="ngModel"></ion-input>
+  </ion-item> 
+   <ion-item >
+    <ion-label color="primary" floating>Catégorie de bar </ion-label>
+   <ion-select   [(ngModel)]="pointVente.type" name="type" #type="ngModel" required>
+         <ion-option  value="Full fun">Full fun</ion-option> 
+         <ion-option  value="Rdv des amis" selected>Rdv des amis</ion-option>
+   </ion-select>
+  </ion-item> 
+  <ion-item (click)="select()">
+ <ion-label color="primary" floating><span >Quartier</span> </ion-label>
+    <ion-input  [(ngModel)]="pointVente.quartier" name="quartier" type="text" placeholder="" #quartier="ngModel"></ion-input>
+  </ion-item> 
+
+   <ion-item >
+ <ion-label color="primary" floating> <span >Nom du gérant</span> </ion-label>
+    <ion-input [(ngModel)]="pointVente.nomGerant" name="nomGerant" type="text" placeholder="" #nomGerant="ngModel"></ion-input>
+</ion-item>
+   <ion-item >       
+ <ion-label color="primary" floating> <span >Télephone du gérant</span> </ion-label>
+    <ion-input [(ngModel)]="pointVente.telGerant" name="telGerant" type="tel" placeholder="" #tel="ngModel"></ion-input>
+</ion-item>  
+  <ion-item >
+      <ion-textarea rows="2" [(ngModel)]="pointVente.description" placeholder="Description du lieu par rapport à un endroit connu" name="description" #description="ngModel"></ion-textarea>
+  </ion-item>
+  <p text-center *ngIf="lat && long"> <ion-icon color="secondary" ios="ios-pin" md="md-pin" large ></ion-icon> lat: {{lat}}, long: {{long}}</p>
+  <p text-center *ngIf="!lat || !long"> <ion-icon color="danger" ios="ios-pin" md="md-pin" large ></ion-icon> Localisation ...</p>
+   </ion-list>
+  <div padding>
+  <button ion-button block  icon-right  [disabled]="isInvalid()" (click)="onSubmit()" > 
+    <span >Enrégistrer  <ion-icon name="md-done-all"></ion-icon></span>    
+  </button>      
+  </div>
+   </form>
+</ion-content>

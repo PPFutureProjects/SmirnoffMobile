@@ -1,0 +1,25 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+     Les RH
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content >
+<ion-searchbar color="primary"
+                   [(ngModel)]="queryText"
+                   (ionInput)="search()"
+                   placeholder="search">
+</ion-searchbar> 
+  <ion-list *ngIf="rhs.length" inset>
+      <ion-item *ngFor="let rh of rhs" (click)="dismiss(rh)" [hidden]="rh.hide">
+        {{rh.nom}}
+      </ion-item>
+  </ion-list>
+</ion-content>

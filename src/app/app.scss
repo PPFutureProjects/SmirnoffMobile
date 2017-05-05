@@ -1,0 +1,24 @@
+// http://ionicframework.com/docs/v2/theming/
+
+
+  a {
+     text-align: center;
+     color: #e0e0e0;
+     small {
+      color: #e0e0e0;
+    }
+  } 
+   .item-menu {
+    text-align: right;
+    background-color: transparent;
+    border: none !important;
+    color: #e0e0e0;
+    h2{
+      font-size: 1.9em;
+      font-style:bold;
+    }  
+  }
+   .menu {
+     color: #e0e0e0;
+     background-color: rgb(6,92,121);
+  }
